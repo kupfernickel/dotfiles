@@ -1,0 +1,38 @@
+# example config (see "hg help config" for more info)
+
+[ui]
+# name and email, e.g.
+# username = Jane Doe <jdoe@example.com>
+username = kchiba <kchiba@winproxy.ne.jp>
+merge = meld
+
+[extensions]
+hgext.convert =
+extdiff =
+color =
+graphlog =
+fetch =
+rebase =
+mq =
+transplant =
+record =
+shelve =
+info = ~/.mercurial/extensions/info.py
+# uncomment these lines to enable some popular extensions
+# (see "hg help extensions" for more info)
+# pager =
+# progress =
+# color =
+[extdiff]
+cmd.meld=
+
+[color]
+mode = ansi
+
+[mq]
+secret = true
+
+[phases]
+new-commit = secret
+
+
