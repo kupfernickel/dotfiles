@@ -1,0 +1,4 @@
+
+home/.mercurial/extensions/*.pyc
+home/.vim/bundle/
+
