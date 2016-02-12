@@ -89,8 +89,9 @@ NeoBundleLazy 'majutsushi/tagbar', {
       \   }
       \ }
 NeoBundleLazy 'davidhalter/jedi-vim', {
-      \ 'autoload': { 'filetypes': [ 'python', 'python3', 'djangohtml' ] 
-},
+      \ 'autoload': {
+      \     'filetypes': [ 'python', 'python3', 'djangohtml' ],
+      \   },
       \   'build': {
       \     'mac': 'pip install jedi',
       \     'unix': 'pip install jedi',
@@ -106,8 +107,11 @@ NeoBundleLazy 'fatih/vim-go', {
 NeoBundleLazy 'dgryski/vim-godef', {
       \ 'autoload': { 'filetypes': [ 'go' ] }
       \ }
-NeoBundleLazy 'thinca/vim-quickrun', {'autoload': {'mappings': [['nxo', 
-'<Plug>(quickrun)']]}}
+NeoBundleLazy 'thinca/vim-quickrun', {
+      \ 'autoload': {
+      \   'mappings': [['nxo', '<Plug>(quickrun)']]
+      \ } }
+
 NeoBundle "osyo-manga/unite-quickfix"
 NeoBundle "osyo-manga/shabadou.vim"
 NeoBundle 'Shougo/vinarise.vim'
@@ -117,8 +121,7 @@ NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'tomasr/molokai'
 
 if has('lua') && v:version >= 703 && has('patch885')
-  NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload': { 'insert': 1 } 
-}
+  NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload': { 'insert': 1 } }
 
   let g:neocomplete#enable_at_startup = 1
   let s:hooks = neobundle#get_hooks("neocomplete.vim")
@@ -128,8 +131,7 @@ if has('lua') && v:version >= 703 && has('patch885')
     let g:neocomplete#enable_smart_case = 1
   endfunction
 else
-  NeoBundleLazy 'Shougo/neocomplcache.vim', { 'autoload': { 'insert': 1 
-} }
+  NeoBundleLazy 'Shougo/neocomplcache.vim', { 'autoload': { 'insert': 1 } }
 
   let g:neocomplcache_enable_at_startup = 1
   let s:hooks = neobundle#get_hooks("neocomplcache.vim")
@@ -220,10 +222,8 @@ let g:unite_source_file_mru_limit = 200
 
 nnoremap <silent> <C-u><C-y> :<C-u>Unite history/yank<CR>
 nnoremap <silent> <C-u><C-b> :<C-u>Unite buffer<CR>
-nnoremap <silent> <C-u><C-f> :<C-u>UniteWithBufferDir -buffer-name=files 
-file<CR>
-nnoremap <silent> <C-u><C-r> :<C-u>Unite -buffer-name=register 
-register<CR>
+nnoremap <silent> <C-u><C-f> :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <C-u><C-r> :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> <C-u><C-u> :<C-u>Unite file_mru buffer<CR>
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
@@ -233,8 +233,7 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 " ----------------------------------------------------
 nnoremap <Leader>e :VimFilerExplorer<CR>
 " close vimfiler automatically when there are only vimfiler open
-autocmd MyAutoCmd BufEnter * if (winnr('$') == 1 && &filetype ==# 
-'vimfiler') | q | endif
+autocmd MyAutoCmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') | q | endif
 let s:hooks = neobundle#get_hooks('vimfiler')
 
 function! s:hooks.on_source(bundle)
@@ -284,8 +283,7 @@ let g:lightline = {
       \ }
 
 function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : 
-&modifiable ? '' : '-'
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
@@ -314,8 +312,7 @@ function! MyFileformat()
 endfunction
 
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'unknown') 
-: ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'unknown') : ''
 endfunction
 
 function! MyFileencoding()
@@ -359,8 +356,7 @@ nnoremap <Leader>t :TagbarToggle<CR>
 " ----------------------------------------------------
 nmap <Leader>q <Plug>(quickrun)
 let s:hooks = neobundle#get_hooks('vim-quickrun')
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? 
-quickrun#sweep_sessions() : "\<C-C>"
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-C>"
 
 function! s:hooks.on_source(bundle)
   let g:quickrun_config = {
