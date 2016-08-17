@@ -47,3 +47,6 @@ eval "$(ndenv init -)"
 export GOPATH=$HOME/go/ext-pkg:$HOME/go/my-pkg
 export PATH=$HOME/go/ext-pkg/bin:$PATH
 
+# Rust environment
+export PATH=$HOME/.cargo/bin:$PATH
+

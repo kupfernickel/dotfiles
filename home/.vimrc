@@ -117,6 +117,12 @@ NeoBundle "osyo-manga/shabadou.vim"
 NeoBundle 'Shougo/vinarise.vim'
 NeoBundle 'kien/rainbow_parentheses.vim'
 
+NeoBundle 'rust-lang/rust.vim'
+NeoBundleLazy 'racer-rust/vim-racer', {
+      \ 'autoload': { 'filetypes': [ 'rust' ] }
+      \ }
+
+
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'tomasr/molokai'
 
@@ -408,4 +414,10 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+
+" ----------------------------------------------------
+" Rust-lang settings
+" ----------------------------------------------------
+let g:racer_cmd = '$HOME/.cargo/bin/racer'
+let $RUST_SRC_PATH="$HOME/.rust/rustc-1.9.0/src"
 
