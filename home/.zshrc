@@ -50,3 +50,6 @@ export PATH=$HOME/go/ext-pkg/bin:$PATH
 # Rust environment
 export PATH=$HOME/.cargo/bin:$PATH
 
+# Cask settings
+export PATH="/home/gaz/.cask/bin:$PATH"
+
