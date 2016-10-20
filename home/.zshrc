@@ -37,12 +37,18 @@ if [ -d $HOME/.anyenv ] ; then
 fi
 
 # Go environment
-export GOPATH=$HOME/go/ext-pkg:$HOME/go/my-pkg
-export PATH=$HOME/go/ext-pkg/bin:$PATH
+if [ -d $HOME/.go ] ; then
+  export GOPATH=$HOME/.go
+  export PATH=$HOME/.go/bin:$PATH
+fi
 
 # Rust environment
-export PATH=$HOME/.cargo/bin:$PATH
+if [ -d $HOME/.rust ] ; then
+  export PATH=$HOME/.cargo/bin:$PATH
+fi
 
 # Cask settings
-export PATH="/home/gaz/.cask/bin:$PATH"
+if [ -d $HOME/.cask ] ; then
+  export PATH=$HOME/.cask/bin:$PATH
+fi
 
