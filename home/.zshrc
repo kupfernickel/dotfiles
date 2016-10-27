@@ -30,26 +30,25 @@ zplug load --verbose
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
-# pyenv setting
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# rbenv setting
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-# ndenv settings
-export PATH="$HOME/.ndenv/bin:$PATH"
-eval "$(ndenv init -)"
+# Anyenv settings
+if [ -d $HOME/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+fi
 
 # Go environment
-export GOPATH=$HOME/go/ext-pkg:$HOME/go/my-pkg
-export PATH=$HOME/go/ext-pkg/bin:$PATH
+if [ -d $HOME/.go ] ; then
+  export GOPATH=$HOME/.go
+  export PATH=$HOME/.go/bin:$PATH
+fi
 
 # Rust environment
-export PATH=$HOME/.cargo/bin:$PATH
+if [ -d $HOME/.rust ] ; then
+  export PATH=$HOME/.cargo/bin:$PATH
+fi
 
 # Cask settings
-export PATH="/home/gaz/.cask/bin:$PATH"
+if [ -d $HOME/.cask ] ; then
+  export PATH=$HOME/.cask/bin:$PATH
+fi
 
