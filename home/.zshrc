@@ -26,11 +26,18 @@ fi
 
 zplug load --verbose
 
+# User local setting
+if [ ! -d $HOME/local ] ; then
+  mkdir $HOME/local
+  mkdir $HOME/local/bin
+fi
+export PATH="$HOME/local/bin:$PATH"
+
 # homeshick setting
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
-# fzf
+# fzf settings
 if [ -f $HOME/.fzf.zsh ] ; then
   source $HOME/.fzf.zsh
 fi
@@ -61,7 +68,7 @@ if [ -d $HOME/.cargo/bin ] ; then
   fi
 fi
 
-# Cask settings
+# emacs settings
 if [ -d $HOME/.cask ] ; then
   export PATH=$HOME/.cask/bin:$PATH
 fi
