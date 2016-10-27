@@ -41,6 +41,12 @@ fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
 # Anyenv settings
 if [ -d $HOME/.anyenv ] ; then
+  if [ -d $HOME/.repos/anyenv-update -a ! -d $HOME/.anyenv/plugins/anyenv-update ]; then
+    ln -sf $HOME/.repos/anyenv-update $HOME/.anyenv/plugins/anyenv-update
+  fi
+  if [ -d $HOME/.repos/anyenv-git -a ! -d $HOME/.anyenv/plugins/anyenv-git ]; then
+    ln -sf $HOME/.repos/anyenv-git $HOME/.anyenv/plugins/anyenv-git
+  fi
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 fi
