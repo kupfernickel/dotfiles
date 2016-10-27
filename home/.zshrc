@@ -1,5 +1,5 @@
 # Created by newuser for 5.2
-source ~/.zplug/zplug
+source ~/.zplug/init.zsh
 
 zplug "plugins/git", from:oh-my-zsh, if:"which git"
 zplug "themes/ys", from:oh-my-zsh
@@ -30,6 +30,11 @@ zplug load --verbose
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
+# fzf
+if [ -f $HOME/.fzf.zsh ] ; then
+  source $HOME/.fzf.zsh
+fi
+
 # Anyenv settings
 if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
@@ -37,14 +42,23 @@ if [ -d $HOME/.anyenv ] ; then
 fi
 
 # Go environment
-if [ -d $HOME/.go ] ; then
+if type go 2>/dev/null 1>/dev/null ; then
+  if [ ! -d $HOME/.go ] ; then
+    mkdir $HOME/.go
+    mkdir $HOME/.go/bin
+    mkdir $HOME/.go/pkg
+    mkdir $HOME/.go/src
+  fi
   export GOPATH=$HOME/.go
   export PATH=$HOME/.go/bin:$PATH
 fi
 
 # Rust environment
-if [ -d $HOME/.rust ] ; then
+if [ -d $HOME/.cargo/bin ] ; then
   export PATH=$HOME/.cargo/bin:$PATH
+  if [ -f $HOME/cargo/bin/racer ] ; then
+    export RUST_SRC_PATH=$HOME/.rust/src/1.12.0/
+  fi
 fi
 
 # Cask settings
