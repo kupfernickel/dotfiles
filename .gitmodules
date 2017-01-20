@@ -1,6 +1,3 @@
-[submodule "home/.anyenv"]
-	path = home/.anyenv
-	url = https://github.com/riywo/anyenv
 [submodule "home/.repos/anyenv-update"]
 	path = home/.repos/anyenv-update
 	url = https://github.com/znz/anyenv-update.git
