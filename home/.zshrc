@@ -40,6 +40,9 @@ setopt EXTENDED_HISTORY
 
 function history-all { history -E 1 }
 
+bindkey '^r' history-incremental-pattern-search-backward
+bindkey '^s' history-incremental-pattern-search-forward
+
 # Zsh directory setting
 export CLICOLOR=1
 alias ls='ls --color=auto'
@@ -50,6 +53,9 @@ setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 
+# Zsh completion
+zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # User local setting
 if [ ! -d $HOME/local/bin ] ; then
