@@ -1,33 +1,35 @@
-# Created by newuser for 5.2
-source ~/.zplug/init.zsh
+# Zplug setting
+if [[ -f $HOME/.zplug/init.zsh ]]; then
+  source ~/.zplug/init.zsh
 
-zplug "plugins/git", from:oh-my-zsh, if:"which git"
-zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
-zplug "themes/ys", from:oh-my-zsh, as:theme
+  zplug "plugins/git", from:oh-my-zsh, if:"which git"
+  zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
+  zplug "themes/ys", from:oh-my-zsh, as:theme
 
-zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
-zplug "peco/peco", from:gh-r, as:command
-zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
+  zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
+  zplug "peco/peco", from:gh-r, as:command
+  zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 
-zplug "b4b4r07/enhancd"
-zplug "mollifier/cd-gitroot"
-zplug "mollifier/anyframe", on:"peco/peco"
+  zplug "b4b4r07/enhancd"
+  zplug "mollifier/cd-gitroot"
+  zplug "mollifier/anyframe", on:"peco/peco"
 
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+  zplug "zsh-users/zsh-completions"
+  zplug "zsh-users/zsh-history-substring-search"
+  zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# zplug "~/.zsh", from:local
-# zplug "repos/robbyrussell/oh-my-zsh/custom/plugins/my-plugin", from:local
+  # zplug "~/.zsh", from:local
+  # zplug "repos/robbyrussell/oh-my-zsh/custom/plugins/my-plugin", from:local
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  if ! zplug check --verbose; then
+      printf "Install? [y/N]: "
+      if read -q; then
+          echo; zplug install
+      fi
+  fi
+
+  zplug load --verbose
 fi
-
-zplug load --verbose
 
 # Zsh history setting
 export HISTFILE=${HOME}/.zsh_history
@@ -38,8 +40,16 @@ setopt EXTENDED_HISTORY
 
 function history-all { history -E 1 }
 
-# Add color to ls command
+# Zsh directory setting
 export CLICOLOR=1
+alias ls='ls --color=auto'
+alias la='ls -lhA'
+alias ll='ls -l'
+alias lst='ls -ltr'
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+
 
 # User local setting
 if [ ! -d $HOME/local/bin ] ; then
@@ -48,17 +58,13 @@ fi
 export PATH="$HOME/local/bin:$PATH"
 
 # homeshick setting
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+if [ -d $HOME/.homesick/repos/homeshick ]; then
+  source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+  fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+fi
 
 # Anyenv settings
-if [ -d $HOME/.repos/.anyenv ] ; then
-  if [ -d $HOME/.repos/anyenv-update -a ! -d $HOME/.repos/.anyenv/plugins/anyenv-update ]; then
-    ln -sf $HOME/.repos/anyenv-update $HOME/.repos/.anyenv/plugins/anyenv-update
-  fi
-  if [ -d $HOME/.repos/anyenv-git -a ! -d $HOME/.repos/.anyenv/plugins/anyenv-git ]; then
-    ln -sf $HOME/.repos/anyenv-git $HOME/.repos/.anyenv/plugins/anyenv-git
-  fi
+if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 fi
