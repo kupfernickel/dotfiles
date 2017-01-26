@@ -76,7 +76,10 @@ if [ -d $HOME/.anyenv ] ; then
 fi
 
 # Go environment
-if type go 2>/dev/null 1>/dev/null ; then
+if [ -f /usr/local/go/bin/go ]; then
+  export PATH=/usr/local/go/bin:$PATH
+  export PATH=$HOME/.go/bin:$PATH
+
   if [ ! -d $HOME/.go ] ; then
     mkdir $HOME/.go
     mkdir $HOME/.go/bin
@@ -84,12 +87,16 @@ if type go 2>/dev/null 1>/dev/null ; then
     mkdir $HOME/.go/src
   fi
   export GOPATH=$HOME/.go
-  export PATH=$HOME/.go/bin:$PATH
 fi
 
 # Rust environment
 if [ -f $HOME/.cargo/env ] ; then
   # export PATH=$HOME/.cargo/bin:$PATH
   source $HOME/.cargo/env
+
+  if [ ! -f $HOME/.rust/completions/rust_zsh_completions ]; then
+    rustup completions zsh > $HOME/.rust/completions/rust_zsh_completions
+  fi
+  fpath+=$HOME/.rust/completions
 fi
 
