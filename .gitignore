@@ -1,4 +1,4 @@
 
 home/.mercurial/extensions/*.pyc
 home/.vim/bundle/
-
+.DS_Store
