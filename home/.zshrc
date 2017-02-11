@@ -31,6 +31,9 @@ if [[ -f $HOME/.zplug/init.zsh ]]; then
   zplug load --verbose
 fi
 
+# Execute local machine setting
+[ -f $HOME/.zshrc_localmachine ] && . $HOME/zshrc_localmachine
+
 # Zsh history setting
 export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=1000
@@ -45,7 +48,14 @@ bindkey '^s' history-incremental-pattern-search-forward
 
 # Zsh directory setting
 export CLICOLOR=1
-alias ls='ls --color=auto'
+case "$OSTYPE" in
+  *darwin*|*freebsd*)
+    alias ls='ls -FG'
+    ;;
+  linux*)
+    alias ls='ls --color=auto'
+    ;;
+esac
 alias la='ls -lhA'
 alias ll='ls -l'
 alias lst='ls -ltr'
@@ -76,17 +86,16 @@ if [ -d $HOME/.anyenv ] ; then
 fi
 
 # Go environment
+if [ ! -d $HOME/.go ] ; then
+  mkdir $HOME/.go
+  mkdir $HOME/.go/bin
+  mkdir $HOME/.go/pkg
+  mkdir $HOME/.go/src
+fi
+export PATH=$HOME/.go/bin:$PATH
+export GOPATH=$HOME/.go
 if [ -f /usr/local/go/bin/go ]; then
   export PATH=/usr/local/go/bin:$PATH
-  export PATH=$HOME/.go/bin:$PATH
-
-  if [ ! -d $HOME/.go ] ; then
-    mkdir $HOME/.go
-    mkdir $HOME/.go/bin
-    mkdir $HOME/.go/pkg
-    mkdir $HOME/.go/src
-  fi
-  export GOPATH=$HOME/.go
 fi
 
 # Rust environment
