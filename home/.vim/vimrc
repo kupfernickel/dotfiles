@@ -1,0 +1,107 @@
+
+if &compatible
+  set nocompatible
+endif
+
+" release autogroup in MyAutoCmd
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+" Set dein.vim path
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+let s:dein_dir = s:cache_home . '/dein'
+let s:dein_repo_dir = s:dein_dir . '/repo/github.com/Shougo/dein.vim'
+
+" Fetch dein.vim
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim ' . s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+
+" Set dein.vim settings
+if dein#local_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+
+  let g:rc_dir = expand('~/.vim/rc')
+  let s:toml = g:rc_dir . '/dein.toml'
+  let s:lazy_toml = g:rc_dir . 'dein_lazy.toml'
+
+  call dein#load_toml(s:toml, { 'lazy': 0 })
+  call dein#load_toml(s:lazy_toml, { 'lazy': 1 })
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+if dein#check_install()
+  call dein#install()
+endif
+
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'tomasr/molokai'
+
+" Required:
+filetype plugin indent on
+
+" ----------------------------------------------------
+" Vim settings
+" ----------------------------------------------------
+set termencoding=utf-8
+set encoding=utf-8
+set mouse=a
+" set ttymouse=xtarm2
+set pastetoggle=<C-e>
+
+" ## Colors ##
+set t_Co=256
+syntax enable
+au BufRead,BufNewFile /etc/nginx/* set ft=nginx
+au BufRead,BufNewFile /etc/php-fpm.conf set ft=php
+au BufRead,BufNewFile /etc/php-fpm.d/* set syntax=dosini
+highlight Normal ctermbg=none
+
+" ## Files ##
+set backupdir=$HOME/.vim/backup
+set noswapfile
+set hidden
+set autoread
+
+" ## Layout  ##
+set notitle
+set number
+set showmatch
+set ruler
+set list
+set nowrap
+set scrolloff=10
+set laststatus=2
+
+" ## Edit ##
+set tabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
+set expandtab
+set smarttab
+set shiftround
+set whichwrap=b,s,h,l,<,>,[,]
+set backspace=indent,eol,start
+
+" ## Search ##
+set ignorecase
+set smartcase
+set wrapscan
+set incsearch
+set hlsearch
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
+" ## Shortcuts ##
+nnoremap <Space>. :<C-u>tabedit $MYVIMRC<CR>
+
+" ## Macros ##
+" Turn off pastemode when leaving insert.
+autocmd InsertLeave * set nopaste
+

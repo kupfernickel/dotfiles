@@ -122,6 +122,11 @@ NeoBundleLazy 'racer-rust/vim-racer', {
       \ 'autoload': { 'filetypes': [ 'rust' ] }
       \ }
 
+NeoBundle 'cespare/vim-toml'
+NeoBundle 'Shougo/context_filetype.vim'
+NeoBundleLazy 'osyo-manga/vim-precious', {
+      \ 'depends': [ 'context_filetype.vim' ]
+      \ }
 
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'tomasr/molokai'
@@ -229,6 +234,7 @@ let g:unite_source_file_mru_limit = 200
 nnoremap <silent> <C-u><C-y> :<C-u>Unite history/yank<CR>
 nnoremap <silent> <C-u><C-b> :<C-u>Unite buffer<CR>
 nnoremap <silent> <C-u><C-f> :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <C-u><C-F> :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> <C-u><C-r> :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> <C-u><C-u> :<C-u>Unite file_mru buffer<CR>
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>

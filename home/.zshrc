@@ -1,3 +1,5 @@
+export XDG_CONFIG_HOME=$HOME/.config
+
 # Zplug setting
 if [[ -f $HOME/.zplug/init.zsh ]]; then
   source ~/.zplug/init.zsh
@@ -28,7 +30,8 @@ if [[ -f $HOME/.zplug/init.zsh ]]; then
       fi
   fi
 
-  zplug load --verbose
+  # zplug load --verbose
+  zplug load
 fi
 
 # Zsh history setting
@@ -89,14 +92,17 @@ if [ -f /usr/local/go/bin/go ]; then
   export GOPATH=$HOME/.go
 fi
 
-# Rust environment
-if [ -f $HOME/.cargo/env ] ; then
-  # export PATH=$HOME/.cargo/bin:$PATH
-  source $HOME/.cargo/env
+# # Rust environment
+# if [ -f $HOME/.cargo/env ] ; then
+#   # export PATH=$HOME/.cargo/bin:$PATH
+#   source $HOME/.cargo/env
 
-  if [ ! -f $HOME/.rust/completions/rust_zsh_completions ]; then
-    rustup completions zsh > $HOME/.rust/completions/rust_zsh_completions
-  fi
-  fpath+=$HOME/.rust/completions
-fi
+#   if [ ! -f $HOME/.rust/completions/rust_zsh_completions ]; then
+#     rustup completions zsh > $HOME/.rust/completions/rust_zsh_completions
+#   fi
+#   fpath+=$HOME/.rust/completions
 
+#   if [ -f $HOME/.cargo/env_racer ]
+#     source $HOME/.cargo/env_racer
+#   fi
+# fi
