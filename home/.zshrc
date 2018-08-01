@@ -28,7 +28,8 @@ if [[ -f $HOME/.zplug/init.zsh ]]; then
       fi
   fi
 
-  zplug load --verbose
+  # zplug load --verbose
+  zplug load
 fi
 
 # Execute local machine setting
@@ -40,6 +41,10 @@ export HISTSIZE=1000
 export SAVEHIST=100000
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
+
+# Locale configure
+setxkbmap -rules evdev -model jp106 -layout jp
+export LANG=ja_JP.UTF-8
 
 function history-all { history -E 1 }
 
@@ -82,7 +87,8 @@ fi
 # Anyenv settings
 if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
+  # eval "$(anyenv init -)"
+  eval "$(anyenv init - zsh)"
 fi
 
 # Go environment

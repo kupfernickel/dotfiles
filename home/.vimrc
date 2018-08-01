@@ -181,6 +181,7 @@ set backupdir=$HOME/.vim/backup
 set noswapfile
 set hidden
 set autoread
+cnoremap w!! w !sudo tee > /dev/null %<CR>
 
 " ## Layout  ##
 set notitle
