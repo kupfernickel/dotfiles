@@ -4,15 +4,15 @@ if [[ -f $HOME/.zplug/init.zsh ]]; then
 
   zplug "plugins/git", from:oh-my-zsh, if:"which git"
   zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
-  zplug "themes/ys", from:oh-my-zsh, as:theme
 
-  zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
+  zplug "starship/starship", from:github, hook-build:"cargo build --release", as:command, use:"target/release/starship"
+  zplug "sharkdp/bat", from:github, hook-build:"cargo build --release", as:command, use:"target/release/bat"
+  zplug "ogham/exa", from:github, hook-build:"cargo build --release", as:command, use:"target/release/exa"
+
   zplug "peco/peco", from:gh-r, as:command
-  zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
-
+  zplug "mollifier/anyframe", on:"peco/peco"
   zplug "b4b4r07/enhancd"
   zplug "mollifier/cd-gitroot"
-  zplug "mollifier/anyframe", on:"peco/peco"
 
   zplug "zsh-users/zsh-completions"
   zplug "zsh-users/zsh-history-substring-search"
@@ -20,6 +20,10 @@ if [[ -f $HOME/.zplug/init.zsh ]]; then
 
   # zplug "~/.zsh", from:local
   # zplug "repos/robbyrussell/oh-my-zsh/custom/plugins/my-plugin", from:local
+
+  #if !(type starship > /dev/null 2>&1); then
+  #  zplug "themes/ys", from:oh-my-zsh, as:theme
+  #fi
 
   if ! zplug check --verbose; then
       printf "Install? [y/N]: "
@@ -34,6 +38,11 @@ fi
 
 # Execute local machine setting
 [ -f $HOME/.zshrc_localmachine ] && . $HOME/zshrc_localmachine
+
+# StarShip
+if type starship > /dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
 
 # Zsh history setting
 export HISTFILE=${HOME}/.zsh_history
@@ -53,9 +62,6 @@ function peco-history-selection() {
   zle reset-prompt
 }
 
-zle -N peco-history-selection
-bindkey '^p' peco-history-selection
-
 ## Zsh cdr
 if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
   autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -74,22 +80,35 @@ function peco-cdr() {
   fi
 }
 
-zle -N peco-cdr
-bindkey '^e' peco-cdr
+# Peco functions
+if type peco > /dev/null 2>&1; then
+  zle -N peco-history-selection
+  bindkey '^p' peco-history-selection
+
+  zle -N peco-cdr
+  bindkey '^e' peco-cdr
+fi
 
 # Zsh directory setting
 export CLICOLOR=1
-case "$OSTYPE" in
-  *darwin*|*freebsd*)
-    alias ls='ls -FG'
-    ;;
-  linux*)
-    alias ls='ls --color=auto'
-    ;;
-esac
-alias la='ls -lhA'
-alias ll='ls -l'
-alias lst='ls -ltr'
+
+if type exa > /dev/null 2>1&; then
+  alias ls='exa -bglha'
+else
+  case "$OSTYPE" in
+    *darwin*|*freebsd*)
+      alias ls='ls -lHaFG'
+      ;;
+    linux*)
+      alias ls='ls -lHa --color=auto'
+      ;;
+  esac
+fi
+
+if type bat > /dev/null 2>1&; then
+  alias cat='bat'
+fi
+
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
@@ -99,7 +118,7 @@ zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # User local setting
-if [ ! -d $HOME/local/bin ] ; then
+if [ ! -d $HOME/local/bin ]; then
   mkdir -p $HOME/local/bin
 fi
 export PATH="$HOME/local/bin:$PATH"
@@ -111,13 +130,13 @@ if [ -d $HOME/.homesick/repos/homeshick ]; then
 fi
 
 # Anyenv settings
-if [ -d $HOME/.anyenv ] ; then
+if [ -d $HOME/.anyenv ]; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 fi
 
 # Go environment
-if [ ! -d $HOME/.go ] ; then
+if [ ! -d $HOME/.go ]; then
   mkdir $HOME/.go
   mkdir $HOME/.go/bin
   mkdir $HOME/.go/pkg
