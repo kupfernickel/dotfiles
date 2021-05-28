@@ -92,7 +92,7 @@ fi
 # Zsh directory setting
 export CLICOLOR=1
 
-if type exa > /dev/null 2>1&; then
+if type exa > /dev/null 2>&1; then
   alias ls='exa -bglha'
 else
   case "$OSTYPE" in
@@ -105,7 +105,7 @@ else
   esac
 fi
 
-if type bat > /dev/null 2>1&; then
+if type bat > /dev/null 2>&1; then
   alias cat='bat'
 fi
 
